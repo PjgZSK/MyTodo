@@ -17,19 +17,113 @@
     - ~~add auxiliary prefab funciton~~
         - ~~when select a gameobject in prefab, you can select to print its path from root gameobject~~
         - ~~upload to github~~
-    - mainBattle UI
+    - mainBattle UI(core battle)
         - building layer animation
-        - equipment/skill switch
-            - skill panel
-                - skill detail panel 
-        - passive skill status: normal, cooldown, locked, dead
-        - KDA show ?
-        - special effect
-            - player death effect
+        - skill
+        - passive skill
+    - core battle state machine 
+    - config design, config deploy, config load 
+    - core battle proxy design
+        - server calculate the result of battle and send all data of match to client
+        - client parser match data and show
     - todo
-        - server data
-        - message
         - guide
+    - battle statistic panel
+        - event
+            - kill event
+                - data
+                    - killer player
+                    - killed player
+                    - weapon
+                - behaviour
+                    - add killer kill data
+                    - add killer money
+                    - add team money of killer
+                    - add killed death data
+            - round finish event
+                - data
+                    - win team, lose team
+                - behaviour
+                    - add player/team money
+                    - try add fail team's compensation 
+        - change
+            - round change
+                - fail compensation 
+                - money
+            - player change
+                - kill
+                - money
+                - death
+        - state
+            - player status
+                - name
+                - kd
+                - avatar
+                - money
+                - role 
+            - team status
+                - name
+                - badge
+                - money
+                - fail compensation 
+
+- net game workflow
+    - request init data 
+    - use init data to init ui
+    - click request / server request
+        - client listen and refresh 
+
+- Day1
+    - main battle proxy design
+        - player property
+            - dynamic
+                - hp
+                - mood
+                - main weapon
+                - knife
+                - grenade status
+                - armor
+                - skill status
+            - constant
+                - name
+                - avatar
+        - team property
+            - name
+            - badge
+            - win/lose
+            - win round 
+        - match property
+            - max round
+            - current round
+            - match count down
+        - status
+            - player status
+                - player property 
+            - team status 
+                - team property
+        - status change
+            - player status change
+                - player dynamic property
+    - single match design
+        - new round
+        - game start
+
+- Day2
+    - optimatize main battle prefab 
+    - add battle statistic panel btn callback
+
+- oz framework 
+    - init proxy
+        - `CommonInitProxyCommand.lua` 
+    - init command
+        - `CommonInitModulesCommand.lua`
+    - server send msg
+        - q
+            - what if error occur in net connecting
+    - `GlobalData.lua`
+        - `userdata`
+            - just temporary data
+            - init from server
 
 修改：
 <!-- 1. 全甲（头盔+护甲），半甲（护甲），无甲切换 -->
@@ -47,6 +141,9 @@
 
 - todo
     - google proto
+    - game state machine
+        - reset state
+        - step state
 
 - unity
     - canvas renderer: what is it?
@@ -67,6 +164,8 @@
         - singleton
         - manage proxies
             - proxyMap: name -> proxy
+        - method
+            - register proxy
             - get proxy
             - remove proxy
     - v (view)

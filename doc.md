@@ -22,3 +22,41 @@
     3. project key word
         - MainBattle
         - test
+
+- Lua
+    - patterns
+        - a character class
+            - escape character: % 
+            - special character: % () [] - .*+? ^$
+                - sequences match character
+                    - * : match zero or more, match as long as possible 
+                    - + : match one or more
+                    - - : match zero or more
+                    - ? : match zero or one
+                    - %bxy : match **balanced** string which start with x and end with y
+                        - the b means balance
+                    - %f[set] : a **frontier** pattern; match a empty string which the next character belongs to set and the previous character does not belong to set
+                        - the f means frontier
+                    - %n : n between 1 to 9; match a substring equal to the n-th captured string 
+            - combined special character:
+                - digit
+                    - %d : all digits
+                        - %D : complement of %d, other % format similar
+                    - %x : all hexadecimal digits
+                - alpha
+                    - %w : all alphanumberic
+                    - %l : all lowercase
+                    - %u : all uppercase
+                - space
+                    - %s : all space 
+                - punctuation
+                    - %p : all punctuation
+                - control
+                    - %c : all control
+                - special
+                    - %g : all printable characters except space
+                - character set
+                    - [set] : all character in set
+                    - [^set] : complement of set
+            - captures
+                - a pattern can contain sub-patterns enclosed in parentheses; they describe captures 

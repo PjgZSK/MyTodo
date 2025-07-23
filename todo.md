@@ -10,9 +10,6 @@
 - lua
     1. require: search path? (config.filename - Assets/Config/config/filename.lua)
 
-- graphic 
-    1. rectangle scale
-
 - csgo project
     - ~~add auxiliary prefab funciton~~
         - ~~when select a gameobject in prefab, you can select to print its path from root gameobject~~
@@ -144,6 +141,7 @@
     - game state machine
         - reset state
         - step state
+    - ui -> a heap of data drived by data
 
 - unity
     - canvas renderer: what is it?
@@ -253,16 +251,3 @@
         - add event
         - remove event
         - dispatch event
-
-    - m (model/proxy)
-        - server communication
-            - to server 
-                - sendMessage(data, protoName)
-                - proto name from ProtoConst
-            - from server
-                - register event
-                    - getServerProtocolList()
-                    - protocolHandler(msg) 
-                - proto name from ProtConst 
-    - v (view/mediator)
-    - c (control/command)

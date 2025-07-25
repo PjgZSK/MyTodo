@@ -117,10 +117,24 @@
     - server send msg
         - q
             - what if error occur in net connecting
+                - re-connect until max re-connect times
     - `GlobalData.lua`
         - `userdata`
             - just temporary data
             - init from server
+    - lua util
+        - instantiate game object
+            - CommonUtil.InstantiateGameObject(assetbundleName, assetName, callback(object))
+                - call AssetBundleManager.cs -> call ResourceManager.cs -> call ResourceLoader.cs
+        - spawn game object 
+            - CommonUtil.Spawn(assetbundleName, assetName, callback(object, data), data) 
+                - call ObjectPool.cs
+                    - instantiation of asset exist
+                        - ab name + asset name -> id (crc32)
+                        - get object, set layer and return object
+                    - dont exist
+                        - call AssetBundleManager.cs -> instantiate a object, set layer and return object
+
 
 修改：
 <!-- 1. 全甲（头盔+护甲），半甲（护甲），无甲切换 -->
@@ -137,11 +151,23 @@
 <!-- MainBattle的自适应效果 -->
 
 - todo
+    - lua closure
+        - non-local variable
     - google proto
     - game state machine
         - reset state
         - step state
     - ui -> a heap of data drived by data
+    - asset bundle
+        - variant
+        - how to build assetbundles, how to get path
+        - load asset from asset bundle
+            - LoadAsset(assetName, type) 
+            - LoadAssetWithSubAssets(assetName, type)
+        - load asset bundle
+            - LoadFromMemory(bytes)
+            - LoadFromFile(path)
+    - map
 
 - unity
     - canvas renderer: what is it?
@@ -156,98 +182,3 @@
         - scale
             - canvas scaler: ui scale mode
 
-
-- mvc abstract
-    - m (model)
-        - singleton
-        - manage proxies
-            - proxyMap: name -> proxy
-        - method
-            - register proxy
-            - get proxy
-            - remove proxy
-    - v (view)
-        - singleton
-        - manage observers
-            - observerMap: notification name -> observer list
-        - manage mediators
-            - mediatorMap: name -> mediator 
-        - method
-            - notifyObservers(notification)
-                - call callback
-            - registerObserver
-                - register callback
-            - removeObserver
-            - register mediator
-                - create, init and show mediator
-                - using mediator register observers
-                    - context is mediator
-                    - callback is a method of mediator
-                    - notification name from mediator  
-                - return mediator
-            - remove mediator
-    - c (controller)
-        - singleton
-        - manage commands
-            - command map: notification name -> command type  
-        - method
-            - register command (notification)
-                - for first time, register observer 
-                    - callback is the method executeCommand of controller
-            - execute command(notification)
-                - retrive command type 
-                - create command instance from type  
-                - call execute method from command instance using notification as arguments
-            - remove command
-
-- mvc implemention
-    - notification
-        - name
-        - body
-        - type
-    - command
-        - virtual method
-            - execute (notification)
-    - observer
-        - property
-            - callback 
-            - context 
-        - method
-            - notifyObserver(notification)
-                - callback (context, notification)
-    - proxy
-        - property
-            - name
-            - data
-        - virtual method
-            - get server protocol list  
-            - get protocol handler 
-        - method
-            - register
-                - add all internal event to event system 
-                    - event name is virtual method(get server protocol list)
-                    - event target is proxy self
-                    - event callback is virtual method(get protocol handler)  
-            - remove
-                - remove all internal event from event system
-            - send
-                - send message to server (brige)
-    - mediator
-        - property
-            - asset bundle path
-            - prefab name
-            - show type  
-        - virtual method
-            - get internal notifications name list
-            - get notification handler 
-            - register
-            - remove
-            - close 
-                - close panel
-    - event system
-        - singleton
-        - manage events
-            - event map: event name -> event data(event name, event target, event callback)
-        - add event
-        - remove event
-        - dispatch event

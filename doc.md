@@ -23,6 +23,133 @@
         - MainBattle
         - test
 
+- oz net framework
+    - server logic
+        - mirage
+            - the key code is in Mirage (on remote host)
+            - Mirage workflow 
+                - Client
+                    - register Client message 
+                        - MsgResponce.lua
+                            - `MsgRespone.Client.MsgStr = messageId`
+                    - send Client message
+                        - `Mirage.Client.MsgStr(Mirage.VENTITY, messageContent)`
+                - World
+                    - register World message 
+                        - MsgResponce.lua
+                            - `MsgRespone.World.MsgStr = messageId` 
+                    - receive World message
+                        - Player.lua
+                            - ManFun.lua : `Mirage.Def.Player = Player` (player register)
+                            - receive message function
+                                - `Player:MsgStr(msg)`
+        - require file : requires.lua
+    - client logic
+        - server message receive
+            - message receive callback
+                - main.lua : OnGetServerMessage 
+            - GameServerController.lua : register oz message callback  
+    - message proto logic
+        - Game.proto : game message definition
+        - Login.proto : login message definition
+        - convert.bat : convert message proto into lua file
+
+- oz mvc framework
+- mvc abstract
+    - m (model)
+        - singleton
+        - manage proxies
+            - proxyMap: name -> proxy
+        - method
+            - register proxy
+            - get proxy
+            - remove proxy
+    - v (view)
+        - singleton
+        - manage observers
+            - observerMap: notification name -> observer list
+        - manage mediators
+            - mediatorMap: name -> mediator 
+        - method
+            - notifyObservers(notification)
+                - call callback
+            - registerObserver
+                - register callback
+            - removeObserver
+            - register mediator
+                - create, init and show mediator
+                - using mediator register observers
+                    - context is mediator
+                    - callback is a method of mediator
+                    - notification name from mediator  
+                - return mediator
+            - remove mediator
+    - c (controller)
+        - singleton
+        - manage commands
+            - command map: notification name -> command type  
+        - method
+            - register command (notification)
+                - for first time, register observer 
+                    - callback is the method executeCommand of controller
+            - execute command(notification)
+                - retrive command type 
+                - create command instance from type  
+                - call execute method from command instance using notification as arguments
+            - remove command
+
+- mvc implemention
+    - notification
+        - name
+        - body
+        - type
+    - command
+        - virtual method
+            - execute (notification)
+    - observer
+        - property
+            - callback 
+            - context 
+        - method
+            - notifyObserver(notification)
+                - callback (context, notification)
+    - proxy
+        - property
+            - name
+            - data
+        - virtual method
+            - get server protocol list  
+            - get protocol handler 
+        - method
+            - register
+                - add all internal event to event system 
+                    - event name is virtual method(get server protocol list)
+                    - event target is proxy self
+                    - event callback is virtual method(get protocol handler)  
+            - remove
+                - remove all internal event from event system
+            - send
+                - send message to server (brige)
+    - mediator
+        - property
+            - asset bundle path
+            - prefab name
+            - show type  
+        - virtual method
+            - get internal notifications name list
+            - get notification handler 
+            - register
+            - remove
+            - close 
+                - close panel
+    - event system
+        - singleton
+        - manage events
+            - event map: event name -> event data(event name, event target, event callback)
+        - add event
+        - remove event
+        - dispatch event
+
 - Lua
     - patterns
         - a character class

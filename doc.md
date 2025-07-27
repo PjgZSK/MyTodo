@@ -171,6 +171,7 @@
                         - %D : complement of %d, other % format similar
                     - %x : all hexadecimal digits
                 - alpha
+                    - %a : all letters
                     - %w : all alphanumberic
                     - %l : all lowercase
                     - %u : all uppercase

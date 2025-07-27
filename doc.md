@@ -158,7 +158,7 @@
                 - sequences match character
                     - * : match zero or more, match as long as possible 
                     - + : match one or more
-                    - - : match zero or more
+                    - - : match zero or more, match as short as possible
                     - ? : match zero or one
                     - %bxy : match **balanced** string which start with x and end with y
                         - the b means balance

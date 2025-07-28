@@ -54,6 +54,32 @@
         - Login.proto : login message definition
         - convert.bat : convert message proto into lua file
 
+- oz client framework 
+    - init proxy
+        - `CommonInitProxyCommand.lua` 
+    - init command
+        - `CommonInitModulesCommand.lua`
+    - server send msg
+        - q
+            - what if error occur in net connecting
+                - re-connect until max re-connect times
+    - `GlobalData.lua`
+        - `userdata`
+            - just temporary data
+            - init from server
+    - lua util
+        - instantiate game object
+            - CommonUtil.InstantiateGameObject(assetbundleName, assetName, callback(object))
+                - call AssetBundleManager.cs -> call ResourceManager.cs -> call ResourceLoader.cs
+        - spawn game object 
+            - CommonUtil.Spawn(assetbundleName, assetName, callback(object, data), data) 
+                - call ObjectPool.cs
+                    - instantiation of asset exist
+                        - ab name + asset name -> id (crc32)
+                        - get object, set layer and return object
+                    - dont exist
+                        - call AssetBundleManager.cs -> instantiate a object, set layer and return object
+
 - oz mvc framework
 - mvc abstract
     - m (model)

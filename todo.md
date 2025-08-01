@@ -30,12 +30,21 @@
         - progress seg/end shining
 
 - todo
+    - data command, proxy template 
     - doc 
         - client send message
         - msgresponce name error
     - lua
         - class:function func(...)
             - func is a global variable ?
+    - C# reflection
+    - tailed progress 
+        - editor
+    - list view
+        - visual effect
+        - content size -> min/max pos, index
+    - python
+        - re.sub
 
 - got
     - Canvas.ForceUpdateCanvases() -- for calculate the position of player status switch motion

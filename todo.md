@@ -30,7 +30,9 @@
         - progress seg/end shining
 
 - todo
+    - a strict weak order, a total order
     - data command, proxy template 
+    - lua dofile <-> gameobject
     - doc 
         - client send message
         - msgresponce name error

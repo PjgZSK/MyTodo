@@ -113,10 +113,4 @@
                 - LoadFromFile(path)
     - map
 
-- unity
-    - canvas renderer: what is it?
-    - canvas
-        - reference resolution
-        - render mode
-    - canvas scaler
-        - ui scale mode
+

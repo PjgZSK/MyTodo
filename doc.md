@@ -214,3 +214,24 @@
                     - [^set] : complement of set
             - captures
                 - a pattern can contain sub-patterns enclosed in parentheses; they describe captures 
+
+
+- unity
+    - canvas renderer: what is it?
+        - handles the actual drawing
+    - canvas
+        - reference resolution
+            - design resolution
+        - canvas scaler
+            - match
+                - 0: scale with width
+                - 1: scale with height
+                - 0.5: balance
+            - expand
+                - expand ui
+            - shrink
+                - might be cropped
+        - render mode
+            - screen space - overlay
+            - screen space - camera
+            - world space

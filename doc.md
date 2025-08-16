@@ -1,5 +1,5 @@
 - csgo project
-    1. config loading
+    - config loading
         - lua script: `LuaDataMgr.lua`
         - concepts 
             - config lua script 
@@ -13,15 +13,17 @@
             - `LuaDataMgr.GetConfig(id)` -- return config list 
             - `LuaDataMgr.GetConfigByIndex(id, index)` -- return config[index]
             - `LuaDataMgr.SetConfigByIndex(id, index, value)`
-    2. sprite loading
+    - sprite loading
         - lua script: `GloabalData.lua`
         - ItemSprite Rule
             - asset name: **prefix_name**
             - asset bundle name: **prefixname** (remove '_' from asset name)
             - API: `AtlasItemFactory:getItemSprite(_, spriteName, spriteObject)`
-    3. project key word
+    - project key word
         - MainBattle
         - test
+    - hot resources update
+        - GameStartController.cs  
 
 - oz net framework
     - server logic
@@ -81,48 +83,48 @@
                         - call AssetBundleManager.cs -> instantiate a object, set layer and return object
 
 - oz mvc framework
-- mvc abstract
-    - m (model)
-        - singleton
-        - manage proxies
-            - proxyMap: name -> proxy
-        - method
-            - register proxy
-            - get proxy
-            - remove proxy
-    - v (view)
-        - singleton
-        - manage observers
-            - observerMap: notification name -> observer list
-        - manage mediators
-            - mediatorMap: name -> mediator 
-        - method
-            - notifyObservers(notification)
-                - call callback
-            - registerObserver
-                - register callback
-            - removeObserver
-            - register mediator
-                - create, init and show mediator
-                - using mediator register observers
-                    - context is mediator
-                    - callback is a method of mediator
-                    - notification name from mediator  
-                - return mediator
-            - remove mediator
-    - c (controller)
-        - singleton
-        - manage commands
-            - command map: notification name -> command type  
-        - method
-            - register command (notification)
-                - for first time, register observer 
-                    - callback is the method executeCommand of controller
-            - execute command(notification)
-                - retrive command type 
-                - create command instance from type  
-                - call execute method from command instance using notification as arguments
-            - remove command
+    - mvc abstract
+        - m (model)
+            - singleton
+            - manage proxies
+                - proxyMap: name -> proxy
+            - method
+                - register proxy
+                - get proxy
+                - remove proxy
+        - v (view)
+            - singleton
+            - manage observers
+                - observerMap: notification name -> observer list
+            - manage mediators
+                - mediatorMap: name -> mediator 
+            - method
+                - notifyObservers(notification)
+                    - call callback
+                - registerObserver
+                    - register callback
+                - removeObserver
+                - register mediator
+                    - create, init and show mediator
+                    - using mediator register observers
+                        - context is mediator
+                        - callback is a method of mediator
+                        - notification name from mediator  
+                    - return mediator
+                - remove mediator
+        - c (controller)
+            - singleton
+            - manage commands
+                - command map: notification name -> command type  
+            - method
+                - register command (notification)
+                    - for first time, register observer 
+                        - callback is the method executeCommand of controller
+                - execute command(notification)
+                    - retrive command type 
+                    - create command instance from type  
+                    - call execute method from command instance using notification as arguments
+                - remove command
 
 - mvc implemention
     - notification

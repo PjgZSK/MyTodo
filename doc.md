@@ -1,182 +1,57 @@
-- csgo project
-    - config loading
-        - lua script: `LuaDataMgr.lua`
-        - concepts 
-            - config lua script 
-                - sample: `cfg_setting.lua`
-                - code generating
-                - return a list
-            - config **id**
-                - `LuaDataMgr` map: string_id -> **id**
-                - map: map[string_id] -> config lua script
-        - API
-            - `LuaDataMgr.GetConfig(id)` -- return config list 
-            - `LuaDataMgr.GetConfigByIndex(id, index)` -- return config[index]
-            - `LuaDataMgr.SetConfigByIndex(id, index, value)`
-    - sprite loading
-        - lua script: `GloabalData.lua`
-        - ItemSprite Rule
-            - asset name: **prefix_name**
-            - asset bundle name: **prefixname** (remove '_' from asset name)
-            - API: `AtlasItemFactory:getItemSprite(_, spriteName, spriteObject)`
-    - project key word
-        - MainBattle
-        - test
-    - hot resources update
-        - GameStartController.cs  
+- timeline和playbales
+    - timeline和playables两个相互引用比较多,所以放在一起
+    - timeline  
+        - track(TrackClipType, TrackBindingType)
+            - clip/behaviour 
+            - Example
+                - marker
+                    - MarkerTrack
+                    - Marker(clip)
+                    - UnityEngine.Playables.INotification
+                    - UnityEngine.Playables.INotificationReceiver
+                - normal
+                    - TrackAsset
+                    - UnityEngine.Playables.PlayableAsset(clip)  
+                    - UnityEngine.Playables.PlayableBehaviour 
+    - playables
+        - PlayableDirector
+            - TimelineAsset : PlayableAsset
+                - runtime binding
 
-- oz net framework
-    - server logic
-        - mirage
-            - the key code is in Mirage (on remote host)
-            - Mirage workflow 
-                - Client
-                    - register Client message 
-                        - MsgResponce.lua
-                            - `MsgRespone.Client.MsgStr = messageId`
-                    - send Client message
-                        - `Mirage.Client.MsgStr(Mirage.VENTITY, messageContent)`
-                - World
-                    - register World message 
-                        - MsgResponce.lua
-                            - `MsgRespone.World.MsgStr = messageId` 
-                    - receive World message
-                        - Player.lua
-                            - ManFun.lua : `Mirage.Def.Player = Player` (player register)
-                            - receive message function
-                                - `Player:MsgStr(msg)`
-        - require file : requires.lua
-    - client logic
-        - server message receive
-            - message receive callback
-                - main.lua : OnGetServerMessage 
-            - GameServerController.lua : register oz message callback  
-    - message proto logic
-        - Game.proto : game message definition
-        - Login.proto : login message definition
-        - convert.bat : convert message proto into lua file
-
-- oz client framework 
-    - init proxy
-        - `CommonInitProxyCommand.lua` 
-    - init command
-        - `CommonInitModulesCommand.lua`
-    - server send msg
-        - q
-            - what if error occur in net connecting
-                - re-connect until max re-connect times
-    - `GlobalData.lua`
-        - `userdata`
-            - just temporary data
-            - init from server
-    - lua util
-        - instantiate game object
-            - CommonUtil.InstantiateGameObject(assetbundleName, assetName, callback(object))
-                - call AssetBundleManager.cs -> call ResourceManager.cs -> call ResourceLoader.cs
-        - spawn game object 
-            - CommonUtil.Spawn(assetbundleName, assetName, callback(object, data), data) 
-                - call ObjectPool.cs
-                    - instantiation of asset exist
-                        - ab name + asset name -> id (crc32)
-                        - get object, set layer and return object
-                    - dont exist
-                        - call AssetBundleManager.cs -> instantiate a object, set layer and return object
-
-- oz mvc framework
-    - mvc abstract
-        - m (model)
-            - singleton
-            - manage proxies
-                - proxyMap: name -> proxy
-            - method
-                - register proxy
-                - get proxy
-                - remove proxy
-        - v (view)
-            - singleton
-            - manage observers
-                - observerMap: notification name -> observer list
-            - manage mediators
-                - mediatorMap: name -> mediator 
-            - method
-                - notifyObservers(notification)
-                    - call callback
-                - registerObserver
-                    - register callback
-                - removeObserver
-                - register mediator
-                    - create, init and show mediator
-                    - using mediator register observers
-                        - context is mediator
-                        - callback is a method of mediator
-                        - notification name from mediator  
-                    - return mediator
-                - remove mediator
-        - c (controller)
-            - singleton
-            - manage commands
-                - command map: notification name -> command type  
-            - method
-                - register command (notification)
-                    - for first time, register observer 
-                        - callback is the method executeCommand of controller
-                - execute command(notification)
-                    - retrive command type 
-                    - create command instance from type  
-                    - call execute method from command instance using notification as arguments
-                - remove command
-
-- mvc implemention
-    - notification
-        - name
-        - body
-        - type
-    - command
-        - virtual method
-            - execute (notification)
-    - observer
-        - property
-            - callback 
-            - context 
-        - method
-            - notifyObserver(notification)
-                - callback (context, notification)
-    - proxy
-        - property
-            - name
-            - data
-        - virtual method
-            - get server protocol list  
-            - get protocol handler 
-        - method
-            - register
-                - add all internal event to event system 
-                    - event name is virtual method(get server protocol list)
-                    - event target is proxy self
-                    - event callback is virtual method(get protocol handler)  
-            - remove
-                - remove all internal event from event system
-            - send
-                - send message to server (brige)
-    - mediator
-        - property
-            - asset bundle path
-            - prefab name
-            - show type  
-        - virtual method
-            - get internal notifications name list
-            - get notification handler 
-            - register
-            - remove
-            - close 
-                - close panel
-    - event system
-        - singleton
-        - manage events
-            - event map: event name -> event data(event name, event target, event callback)
-        - add event
-        - remove event
-        - dispatch event
+- unity editor
+    - Editor 
+        - CustomEditor
+        - target
+        - OnEnable
+        - OnDisable
+        - OnInspectorGUI
+            - DrawDefaultInspector
+            - GUILayout
+            - EditorGUILayout
+    - EditorWindow 
+    - EditorApplication
+        - update
+        - QueuePlayerLoopUpdate
+    - TimelineEditor
+        - inspectedDirector 
+        - Refresh
+    - AssetDatabase
+        - GetAssetPath
+        - GUIDToAssetPath
+        - FindAssets
+        - Refresh
+        - IsValidFolder
+    - Selection
+        - activeObject
+        - activeGameObject
+    - AssetImporter
+        - GetAtPath
+        - assetBundleName 
+        - SaveAndReimport
+    - PrefabUtility
+        - IsPartOfAnyPrefab 
+    - EditorUtility
+        - DisplayDialog
 
 - Lua
     - patterns
@@ -219,21 +94,12 @@
 
 
 - unity
-    - canvas renderer: what is it?
-        - handles the actual drawing
-    - canvas
-        - reference resolution
-            - design resolution
-        - canvas scaler
-            - match
-                - 0: scale with width
-                - 1: scale with height
-                - 0.5: balance
-            - expand
-                - expand ui
-            - shrink
-                - might be cropped
-        - render mode
-            - screen space - overlay
-            - screen space - camera
-            - world space
+    - image component
+        - color * texture color
+    - slua
+        - 如果在lua层不调用类型的具体实例,只想传递类型,直接使用string就可以
+            - 比如传递TimelineAsset类型,把"UnityEngine.Timeline.TimelineAsset"字符串就行
+
+- coding
+    - 数据代码 (数据定义, 序列化/反序列化)
+    - 运行代码 (行为, 函数/内存关键值的改变/根据关键值进行的行为)

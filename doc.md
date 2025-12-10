@@ -99,6 +99,9 @@
     - slua
         - 如果在lua层不调用类型的具体实例,只想传递类型,直接使用string就可以
             - 比如传递TimelineAsset类型,把"UnityEngine.Timeline.TimelineAsset"字符串就行
+    - UnityEvent: delegate type(AddListener, RemoveListener)
+    - 在slua里如何使用delegate
+        - dele = {"+=", action}
 
 - coding
     - 数据代码 (数据定义, 序列化/反序列化)

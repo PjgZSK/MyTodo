@@ -33,6 +33,9 @@
             - content 
 
 - todo
+    - 现在的ai幻觉是真tm的多,还是得自己看官方文档
+
+- todo
     - lua/c call each other
     - slua bind c# class
     - assetbundle load

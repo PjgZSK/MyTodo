@@ -1,3 +1,59 @@
+- todo
+    - *cm state: add battle data logic*
+    - *create role: set role name Chinese character bug fix*
+    - *edit team init code*
+    - *select battle init code*
+    - *fix main battle right team member change ani error*
+    - *optimate mainbattle ui code*
+    - main battle
+        - new ui
+        - c4 ui
+            - *初始状态(ui显隐)*
+            - *炸弹倒计时不同时间不同色彩*
+            - *炸弹倒计时两个闪烁动画*
+            - *拆弹测试*
+                - *拆弹条时间动态化*
+            - 动画 (*拆弹钳呼吸动画*,*炸弹拆除/爆炸状态出现缩放动画*)
+            - *闪光条错位问题*
+            - *拆弹失败: 蓝色进度条，在爆炸前的最后1s时，会停止增长并晃动0.3s，然后消失*
+    - bug
+        - EsportsAthlete表里的quality有个值为0,代码不支持
+        - 下包炸弹倒计时进度条缺一个颜色资源
+    - notice
+        - list
+            - type: bug/news/important/activity
+            - filter: all/unread/read/reward
+            - btn: one-click-claim, mark all as read
+            - preview
+            - special effect
+                - selected float 
+        - single announcement panel
+            - banner
+            - title
+            - content 
+
+- todo
+    - lua/c call each other
+    - slua bind c# class
+    - assetbundle load
+    - c# assembly/reflection
+    - Esport Manager 2026
+        - 签名功能
+        - 点图
+            - 线
+            - 动画
+    - net game pay interface
+
+- todo
+    - videoplayer.onSeekCompleted 回调的时候videoplayer.time没有刷新
+    - high light timeline
+        - *在c#层的事件原型写好,在lua层的事件触发代码写好 - (暂时做了个简略的)*
+        - timeline video track优化
+            - *时间优化,默认时间就是视频长度,不要后面手动赋值 - (做了个按钮)*
+            - game视图的刷新, 把videoplayercontroller的刷新单独拿出来
+        - *获取PlaybaleDirector,手动设置playbale(timeline asset),给playbal里的Game Event Track手动设置GameEventReceiver组件*
+    - slua
+        - *slua在导入UntiyEngine.Timeline.TimelineAsset时报错,像是导入泛型内容报错 - (不用导入Timeline空间,直接在c#层实现,lua调用c#层的东西就可以了)*
 - todo 
     - 生涯赛
         - MsgReturnBattleResult
@@ -8,10 +64,10 @@
             - *对局概览 程序不要自动设置横向滑动框的滑动位置,让用户自己滑动*
             - *ban/pick 按钮,两个按钮都要出现,不能按的按钮置灰*
             - *pick的地图前移*
-            - bp的最后一张地图保持left状态
-        - 生涯赛要能保存状态(优先级靠后)
+            - *bp的最后一张地图保持left状态*
+        - *生涯赛要能保存状态(优先级靠后)*
             - 玩家退出重进,要能回到上次的状态
-            - 生涯赛界面的退出箭头就是暂时退出生涯赛
+            - *生涯赛界面的退出箭头就是暂时退出生涯赛*
             - 解决思路
                 - 保存进度
                     - 客户端有一个cm状态管理器,状态管理器里有一个state的变量负责记录cm当前的进度,在玩家退出的时候把这个状态(state变量)发送给服务器保存
@@ -20,7 +76,7 @@
                 - 恢复状态和记录
                     - 在玩家重进的时候,服务器下发保存的进度和记录,客户端根据下发的进度和记录恢复cm状态管理器
     - 创角
-        - 创角名字为中文会一直提示错误
+        - *创角名字为中文会一直提示错误 - (客户端名字检测使用string.match的%w导致的, 把这条检测规则去掉了)*
         - 创角现在没有头像和头像框资源
     - 选手仓库
         - *现在只做了金色卡的ui,代码没做其他等级卡的资源替换*
@@ -54,3 +110,14 @@
 - space
     - model, local, world 
 
+- unity
+    - Graphic
+        - void OnPopulateMesh(VertexHelper vh)
+    - shader, vertex, texture
+    - ui render
+        - Graphic
+        - CanvasRenderer
+    - normal render
+        - MeshRenderer
+        - Mesh
+        - Material 

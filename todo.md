@@ -36,6 +36,14 @@
     - 现在的ai幻觉是真tm的多,还是得自己看官方文档
 
 - todo
+    - server
+        - exit data save
+        - database
+            - cache: read/write, save
+
+- todo
+    - lua metatable
+    - dictionary
     - lua/c call each other
     - slua bind c# class
     - assetbundle load

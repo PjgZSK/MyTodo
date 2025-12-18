@@ -19,6 +19,11 @@
     - bug
         - EsportsAthlete表里的quality有个值为0,代码不支持
         - 下包炸弹倒计时进度条缺一个颜色资源
+    - 美术
+        - 公告字体颜色
+        - 邮件没找到底板资源
+    - mail
+        - 邮件后端 (接收邮件,更新邮件,已读功能,领取奖励功能)
     - notice
         - list
             - type: bug/news/important/activity
@@ -31,6 +36,9 @@
             - banner
             - title
             - content 
+- todo
+    - server doc
+    - client ui init/reset
 
 - todo
     - 现在的ai幻觉是真tm的多,还是得自己看官方文档

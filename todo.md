@@ -1,41 +1,58 @@
 - todo
-    - *cm state: add battle data logic*
-    - *create role: set role name Chinese character bug fix*
-    - *edit team init code*
-    - *select battle init code*
-    - *fix main battle right team member change ani error*
-    - *optimate mainbattle ui code*
-    - main battle
-        - new ui
-        - c4 ui
-            - *初始状态(ui显隐)*
-            - *炸弹倒计时不同时间不同色彩*
-            - *炸弹倒计时两个闪烁动画*
-            - *拆弹测试*
-                - *拆弹条时间动态化*
-            - 动画 (*拆弹钳呼吸动画*,*炸弹拆除/爆炸状态出现缩放动画*)
-            - *闪光条错位问题*
-            - *拆弹失败: 蓝色进度条，在爆炸前的最后1s时，会停止增长并晃动0.3s，然后消失*
     - bug
-        - EsportsAthlete表里的quality有个值为0,代码不支持
-        - 下包炸弹倒计时进度条缺一个颜色资源
-    - 美术
-        - 公告字体颜色
-        - 邮件没找到底板资源
-    - mail
+        - 配置bug
+            - EsportsAthlete表里的quality有个值为0,代码不支持
+            - 下包炸弹倒计时进度条缺一个颜色资源
+        - 程序bug
+            - 前端
+                - 下包ui状态缺少一个停止下包的接口
+                - 最后包炸了  要隐藏下地图上的C4
+                - 下包进度条扩散时没有光标
+                - 下包进度条在被调用停止接口时, 会主动显示
+                - 爆炸死亡警示在player血量变化时没有触发检查
+                - ~~战斗时钳子图标会莫名其妙的消失~~
+                - ~~换边重置护甲~~
+            - 后端
+                - 后端给的背包里出现的手雷数量有概率大于4
+            - 前后端同步问题
+                - 当ct方拆弹胜利,前端发送拆弹胜利消息给后端,后端移除所有已死亡的队员的物品,并向前端发送刷新物品的消息,这个时候战斗表现有概率还没结束,会导致前端ui显示问题
+                - ~~战术背包同步有bug~~
+        - 美术bug
+            - 公告字体颜色
+    - optimization
+        - 下包斜向进度条换正向进度条
+        - 购买动画优化(总时间5s, 道具购买/护甲/钳子购买增加间隔, 道具购买0.5s间隔,经济数字跳动后再播放购买动画)
+    - function
+        - 战斗场景道具交互
         - 邮件后端 (接收邮件,更新邮件,已读功能,领取奖励功能)
-    - notice
-        - list
-            - type: bug/news/important/activity
-            - filter: all/unread/read/reward
-            - btn: one-click-claim, mark all as read
-            - preview
-            - special effect
-                - selected float 
-        - single announcement panel
-            - banner
-            - title
-            - content 
+    - alert
+        - scene change: special effect
+
+- todo
+    - ~~cm state: add battle data logic~~
+    - ~~create role: set role name Chinese character bug fix~~
+    - ~~edit team init code~~
+    - ~~select battle init code~~
+    - ~~fix main battle right team member change ani error~~
+    - ~~optimate mainbattle ui code~~
+    - ~~c4 ui~~
+        - ~~初始状态(ui显隐)~~
+        - ~~炸弹倒计时不同时间不同色彩~~
+        - ~~炸弹倒计时两个闪烁动画~~
+        - ~~拆弹测试~~
+            - ~~拆弹条时间动态化~~
+        - ~~动画 (拆弹钳呼吸动画*,*炸弹拆除/爆炸状态出现缩放动画)~~
+        - ~~闪光条错位问题~~
+        - ~~拆弹失败: 蓝色进度条，在爆炸前的最后1s时，会停止增长并晃动0.3s，然后消失~~
+    - ~~c4相关~~
+        - ~~c4掉落红圈动画提示 (*需要知道c4状态, c4掉落位置*) (这个需要消息)~~
+        - ~~c4下包后提示~~
+            - ~~当警家进入爆炸范围会有提示, 现在只有警家会被炸死时有提示 (*需要知道c4下包位置, 警家位置, 爆炸范围*) (这个需要增加战斗逻辑)~~
+                - ~~ui上有提示~~
+                - ~~小头像有提示~~
+            - ~~以包体为中心扩散波纹提示/包体呼吸提示(*需要知道包体位置, 包体状态*) (先做这个, 这个不需要消息)~~
+        - ~~下包/拆包声音范围提示(*需要知道下包/拆包位置, 声音范围*) (在做这个 这个也不需要消息)~~
+
 - todo
     - server doc
     - client ui init/reset

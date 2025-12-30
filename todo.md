@@ -75,6 +75,11 @@
     - client ui init/reset
 
 - todo
+    - thread 
+    - update/fixupdate/lateupdate
+    - socket: tcp
+
+- todo
     - 现在的ai幻觉是真tm的多,还是得自己看官方文档
 
 - todo

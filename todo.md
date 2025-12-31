@@ -10,6 +10,7 @@
                 - 下包进度条扩散时没有光标
                 - 下包进度条在被调用停止接口时, 会主动显示
                 - 爆炸死亡警示在player血量变化时没有触发检查
+                - 战斗主界面y轴翻转选手面板导致点击区域异常
                 - ~~战斗时钳子图标会莫名其妙的消失~~
                 - ~~换边重置护甲~~
             - 后端
@@ -25,21 +26,84 @@
     - function
         - 战斗镜头移动 
             - 设计思路
-                - 事件和事件的触发分开来: 发事件在战斗逻辑,事件的处理是镜头移动逻辑
+                - 事件的处理和事件的触发分开来: 发事件在战斗逻辑,事件的处理是镜头移动逻辑
             - 实现分层
                 - 事件定义(CameraFollowEvent)
-                    - id, name, priority, canInterrupt, maxTriggerCount, followedGOs
+                    <!-- - id, name, priority, canInterrupt, group, followedGOs
+                    - CameraFollowEventGroup(Enum, 事件组)
+                        - PlayerFollow  (玩家跟随)
+                        - ThrowableFollow  (可抛掷道具跟随)
+                        - BattleFollow  (战局跟随)
+                        - C4Follow  (c4跟随) -->
                 - 发事件lua接口类(CameraFollowEventTrigger)
+                    <!-- - 触发逻辑(核心逻辑)
+                         - TriggerFollowEvent(根据传进来的事件组, 优先级和go列表生成并触发事件) 
+                            1. CameraFollowEventHandler实例检查,为空则不触发事件,逻辑结束
+                            1. 检查go列表, 不通过则不触发事件,逻辑结束
+                            2. 生成事件: 事件id, 事件名(group+id), 事件优先级,事件组,follow列表
+                            3. 处理事件(使用CameraFollowEventHandler接口), 并返回结果 -->
+                    <!-- - 成员变量
+                        - CameraFollowEventHanlder实例
+                        - 事件自增id -->
+                    <!-- - 外部接口
+                        - Init(初始化, 传入Camera)
+                            1. 给camera增加CameraFollow,并缓存camerafollow
+                            2. 通过camerafollow生成CameraFollowEventHandler实例, 并赋值给成员变量 -->
                 - 事件处理(CameraFollowEventHandler)
+                    <!-- - 触发逻辑(核心逻辑)
+                        - HandleFollowEvent(处理跟随事件)
+                            1. 检查CameraFollow, 为空则无法触发事件,逻辑结束
+                            2. 事件有效性检查(实参判空,跟随go列表使用==判空),不通过则不触发事件,逻辑结束
+                            3. 获取实参事件的事件组,事件组是否有次数限制,如果有次数限制并且已到达上限,不触发事件,逻辑结束
+                            4. 获取当前在跑的跟随事件(从CameraFollow里获取), 如果存在事件并且当前事件的优先级比实参事件高,那么不触发跟随事件,逻辑结束
+                            5. 将传进来的事件设为当前事件(在CameraFollow里设置)
+                            6. 实参事件的触发次数加1 -->
+                    <!-- - 成员变量
+                        - <事件组, 触发次数>字典
+                        - CameraFollow实例 -->
+                    <!-- - 外部接口
+                        - CameraFollow实例获取/设置
+                        - 清除次数字典 -->
                 - 镜头移动逻辑(CameraFollow)
-                    - 在update里处理移动逻辑
-                        1. 计算target (多个跟随目标计算或者单个跟随目标计算)
-                        2. 计算camera和target的方向向量,乘以速度就是本次update移动的距离
-                        3. camera的位置加上移动的距离
+                    <!-- - z轴运动
+                        - 缓存值: cameraOriginZ
+                        - z轴运动参数变量: originZ, targetZ, durationZ, zElapsed
+                        - 触发
+                            - 当设置新事件(如果新事件有z轴变化): originZ设置为相机当前的位置, targetZ设置为跟随事件的targetZ 
+                            - 当事件被取消/无效(如果旧事件有z轴变化): originZ设置为相机当前的位置, targetZ设置为 cameraOriginZ, 其他z轴运动参数和事件保持一致 -->
+                    <!-- - 基础跟随事件
+                        - 当当前跟随事件结束或者失效时,如果有基础跟随事件,回到基础跟随事件 -->
+                    <!-- - 移动逻辑(核心逻辑)
+                        - update(处理移动逻辑)
+                            1. 计算targetPos(多个跟随目标计算或者单个跟随目标计算)
+                            2. 判断camara pos是否到达了targetPos, 如果到达了,本次逻辑结束;没有的话进入下一步
+                            2. 计算从camera pos指向targetPos的向量v,v.normalized乘以速度和v.magnitude的小者就是本次update移动的距离
+                            3. camera的位置加上移动的距离 -->
+                    <!-- - field 
+                        - currentCamera: 当前控制的camera
+                        - speed: 镜头移动速度
+                        - currentFollowEvent: 当前跟随事件
+                        - previousFollowEvent: 前一个跟随事件的缓存
+                        - followEnabled: 是否允许跟随 -->
+                    <!-- - property
+                        - isFollowEnabled -->
+                    <!-- - 接口
+                        - SetFollowEvent: 设置跟随事件
+                        - GetCurrentEvent: 获取当前的跟随事件 -->
+                    - 事件(Event)
+                        - OnFollowFinished: 当跟随事件顺利结束
+                        - OnFollowInterrupted: 当跟随事件被中断了
+                        - OnFollowResumed: 当跟随事件恢复跟随
+                        - OnFollowStoped: 当跟随事件停止跟随
             - 工作量
                 - 发事件(触发时机) 1.5天
                 - 移动逻辑 + 事件处理 1天
-                
+        - 战斗镜头移动优化
+            - 重要
+                <!-- - 增加基础事件 -->
+                <!-- - 增加俯冲/拉升(z轴值), 俯冲/拉升速度 -->
+                - 增加俯冲/拉升运动模糊效果(备用)
+            - 玩家跟随触发时机修改
         - 邮件后端 (接收邮件,更新邮件,已读功能,领取奖励功能)
         ~~- 战斗场景道具交互~~ (废弃,给别人做了)
     - alert

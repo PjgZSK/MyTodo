@@ -92,6 +92,14 @@
             - captures
                 - a pattern can contain sub-patterns enclosed in parentheses; they describe captures 
 
+    - require
+        - type: function
+        - used table: package(dict), package.loaded(dict), package.preload(loader func dict), package.path(string), package.cpath(string), package.loaders(four loader function) 
+        - four loader function (package.loaders)
+            - package.preload
+            - package.path
+            - package.cpath
+            - all-in-one loader
 
 - unity
     - image component

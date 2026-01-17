@@ -1,5 +1,5 @@
 - todo
-     bug
+    - bug
         - 配置bug
             <!-- - EsportsAthlete表里的quality有个值为0,代码不支持 -->
             - 下包炸弹倒计时进度条缺一个颜色资源
@@ -13,8 +13,9 @@
                     - 等有时间再改吧
                 - c4伤害示警用的伤害公式固定是dust2;不同地图伤害公式应该不一样
                     - 等后面其他3d地图实装时再改
-                - 战斗主界面y轴翻转选手面板导致点击区域异常
-                    - 这个等镜头跟随正式优化的时候再改,现在镜头跟随的不确定性太多
+                <!-- - 战斗主界面y轴翻转选手面板导致点击区域异常
+                    - 这个等镜头跟随正式优化的时候再改,现在镜头跟随的不确定性太多 -->
+                <!-- - fpsmainuicontroller.lua里的ondestroy拼错了 -->
                 - ~~战斗时钳子图标会莫名其妙的消失~~
                 - ~~换边重置护甲~~
             - 后端
@@ -25,6 +26,7 @@
         - 美术bug
             - 公告字体颜色
     - optimization
+        - 战斗主界面实例化选手面板的时候每次都forceUpdateCanvases, 可以优化
         - 下包斜向进度条换正向进度条
         - ~~购买动画优化(总时间5s, 道具购买/护甲/钳子购买增加间隔, 道具购买0.5s间隔,经济数字跳动后再播放购买动画)~~
     - function
@@ -119,8 +121,80 @@
             <!-- - 地编ctburst的AB区域属性配置有问题,需要地编那边修改 -->
         - 邮件后端 (接收邮件,更新邮件,已读功能,领取奖励功能)
         ~~- 战斗场景道具交互~~ (废弃,给别人做了)
+        - 生涯赛接入战斗,创角和后端
+            - 生涯赛bug
+                <!-- - 未打最后一场比赛直接走结果流程了  -->(是模拟数据的问题, 已经做了多处的log输出)
+            - 接入战斗
+                <!-- 1. 发战斗消息(mapid) -->
+                <!-- 2. 战斗结束获取结果
+                    - 增加一个立即结束战斗的gm命令
+                    - 获取快速战斗的的结果 -->
+                3. 同步cm管理器进度
+            - 接入创角
+                <!-- - 创角结束后直接进入生涯赛 -->
+            - 接入后端
+                - 接入普通后端
+                - 接入创角后生涯赛后端(直接进入淘汰赛第二轮)
+                <!-- - 去除选手从后端传进来的选手信息, 改为从表格读取 -->
+    - 别人的bug
+        <!-- - 快速战斗返回的teamID有一个是0 -->(已反馈)
+        <!-- - 快速战斗的返回结果缺少: 上下半场分数, 地图id -->(已反馈)
     - alert
         - scene change: special effect
+    - 工具类
+        <!-- - 去除cm里所有的print_dump -->
+        <!-- - 增加print_dump的替代品
+            - print_dump没啥大问题, 崩溃的原因是protobuf解码的某些消息table只记录了消息名和消息二进制数据,解码行为在metatable里,在c#端print二进制数据时抛出异常 -->(对未解码的table挨个使用protobuf的decode解码)
+        - 在运行的场景中寻找特定instance id的component或者gameobject
+    - 改版
+        - 战斗主界面ui改版
+            - todo-list
+                - 玩家信息面板改版
+                    <!-- - 款式大改
+                        - t/ct面板换色
+                        - 同步血条透明度设置为0 -->
+                    <!-- - 增加卡牌 -->
+                        - 卡牌死亡效果
+                            - 等卡牌改完版再做
+                    <!-- - kda改版 -->
+                    <!-- - 出场动画改版 -->
+                <!-- - 底部按钮改版
+                    - 战报下移 -->
+                    - 炸死警告(应该是改3d后的代码问题)
+                        - 没资源,等资源到再改
+            - changes
+                - 玩家名字,玩家头像隐藏
+                - 同步血条透明度为0(无资源)
+
+- bug info
+NetWork, ReceiveCallback Error:{socket disconnect}
+-----NetWork, Close------
+OzGameClient, Update Error. (String conversion error: Illegal byte sequence encounted in the input.)
+
+- 专项
+    - 场景画面捕捉处理
+    - 字符编码理解
+        - lua 字符编码理解
+    <!-- - lua metatable理解
+        - event - metamethod -->
+
+slua
+path:
+.\?.lua
+C:\Program Files\Unity 2021.3.22f1\Editor\lua\?.lua
+C:\Program Files\Unity 2021.3.22f1\Editor\lua\?\init.lua
+C:\Program Files\Unity 2021.3.22f1\Editor\?.lua
+C:\Program Files\Unity 2021.3.22f1\Editor\?\init.lua
+d:\Program Files (x86)\Lua\5.1\lua\?.luac
+
+cpath:
+.\?.dll
+C:\Program Files\Unity 2021.3.22f1\Editor\?.dll
+C:\Program Files\Unity 2021.3.22f1\Editor\loadall.dll
+
+- unity 行为偏差
+    - UI
+        - layout组件即使调用force update canvases接口, 在某些情况下也不会立即布局
 
 - todo
     - ~~cm state: add battle data logic~~

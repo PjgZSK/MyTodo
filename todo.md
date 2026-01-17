@@ -175,6 +175,9 @@ OzGameClient, Update Error. (String conversion error: Illegal byte sequence enco
     - 场景画面捕捉处理
     - 字符编码理解
         - lua 字符编码理解
+    - slua
+        - unity plugin-in (dll, bundle)
+        - 如何与C#交互
     <!-- - lua metatable理解
         - event - metamethod -->
 

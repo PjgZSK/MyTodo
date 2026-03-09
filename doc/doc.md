@@ -117,3 +117,52 @@
 
 - 关于lua的and和or
     - and和or都是从左到右执行的操作符,区别在于and的返回值是第一个值为false/nil的操作数,或者是最后一个操作数;而or判定的是 非false/nil 的操作数
+
+- Windows CMD设置代理
+    - :: HTTP 代理
+    - set HTTP_PROXY=http://127.0.0.1:7890
+    - set HTTPS_PROXY=http://127.0.0.1:7890
+    - 
+    - :: SOCKS5 代理（如果代理工具支持）
+    - set HTTP_PROXY=socks5://127.0.0.1:7890
+    - set HTTPS_PROXY=socks5://127.0.0.1:7890
+    - 
+    - :: 可选：设置不代理的地址
+    - set NO_PROXY=localhost,127.0.0.1,.local
+    - 
+    - :: 验证设置
+    - echo %HTTP_PROXY%
+- Windows PowerShell设置代理
+    - # 设置环境变量
+    - $env:HTTP_PROXY="http://127.0.0.1:7890"
+    - $env:HTTPS_PROXY="http://127.0.0.1:7890"
+    - 
+    - # 验证
+    - echo $env:HTTP_PROXY
+- Git Bash设置代理
+    - export HTTP_PROXY=http://127.0.0.1:7890
+    - export HTTPS_PROXY=http://127.0.0.1:7890
+    - export ALL_PROXY=socks5://127.0.0.1:7890  # 部分工具使用
+    - export NO_PROXY="localhost,127.0.0.1,::1"
+- Claude Code国内安装(Windows)
+    - 下载url 
+        - PowerShell运行命令: irm https://claude.ai/install.ps1, 获取安装脚本
+        - url: https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.69/win32-x64/claude.exe
+    - 跳过首次验证
+        - Claude Code本地配置文件
+            - ~/.cluade.json
+        - 在本地配置文件里加入跳过首次验证
+            - "hasCompletedOnboarding": true
+
+- Claude使用中转服务器
+    - ANTHROPIC_BASE_URL
+        - 现在使用的是: https://4399code.com/claudecode
+- Claude使用API KEY
+    - # macOS/Linux - 临时设置（当前终端会话）
+    - export ANTHROPIC_API_KEY="your-api-key-here"
+    - 
+    - # Windows CMD
+    - set ANTHROPIC_API_KEY=your-api-key-here
+    - 
+    - # Windows PowerShell
+    - $env:ANTHROPIC_API_KEY="your-api-key-here"
